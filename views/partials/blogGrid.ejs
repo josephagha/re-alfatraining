@@ -1,0 +1,9 @@
+<% blogCoverClass = locals.large ? 'blog-cover-large' : '' %>
+<% blogGridClass = locals.large ? 'blog-grid-large' : '' %>
+<div class="blog-grid <%= blogGridClass %>">
+  <% blogs.forEach(blog => { %>
+    <a href="/blogs/<%= blogs.id %>">
+      <img class="blogs-cover <%= blogsCoverClass %>" src="<%= blogs.coverImagePath %>">
+    </a>
+  <% }) %>
+</div>

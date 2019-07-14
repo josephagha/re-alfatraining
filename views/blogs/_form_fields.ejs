@@ -1,0 +1,24 @@
+<div class="form-row">
+  <div class="form-item">
+    <label>Title</label>
+    <input type="text" name="title" value="<%= blog.title %>">
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-item">
+    <label>Sub title</label>
+    <input type="text" name="subTitle" min="1" value="<%= blog.subTitle %>">
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-item form-item-no-grow">
+    <label>Cover</label>
+    <input type="file" name="cover" class="blog-cover filepond">
+  </div>
+  <div class="form-item">
+    <label>blog text</label>
+    <textarea name="description"><%= blog.blogText %></textarea>
+  </div>
+</div>
