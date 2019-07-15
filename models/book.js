@@ -1,16 +1,19 @@
 const mongoose = require('mongoose')
 
-const blogSchema = new mongoose.Schema({
-  blogTitle: {
+const bookSchema = new mongoose.Schema({
+  title: {
     type: String,
     required: true
   },
-  subTitle: {
-    type: String,
+  description: {
+    type: String
+  },
+  publishDate: {
+    type: Date,
     required: true
   },
-  blogText: {
-    type: String,
+  pageCount: {
+    type: Number,
     required: true
   },
   createdAt: {
@@ -33,10 +36,10 @@ const blogSchema = new mongoose.Schema({
   }
 })
 
-blogSchema.virtual('coverImagePath').get(function() {
+bookSchema.virtual('coverImagePath').get(function() {
   if (this.coverImage != null && this.coverImageType != null) {
     return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
   }
 })
 
-module.exports = mongoose.model('Blog', blogSchema)
+module.exports = mongoose.model('Book', bookSchema)

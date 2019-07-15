@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const Book = require('../models/book')
+const Author = require('../models/author')
 const Blog = require('../models/blog')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 
@@ -24,41 +26,42 @@ router.get('/', async (req, res) => {
   } catch {
     res.redirect('/')
   }
-});
+})
 
 // New blog Route
 router.get('/new', async (req, res) => {
   renderNewPage(res, new Blog())
-});
+})
 
-// Create Blog Route
+// Create blog Route
 router.post('/', async (req, res) => {
   const blog = new Blog({
-    title: req.body.title,
-    publishDate: new Date().toLocaleDateString(),
+    blogTitle: req.body.blogTitle,
+    author: req.body.author,
     subTitle: req.body.subTitle,
     blogText: req.body.blogText
-  });
+  })
   saveCover(blog, req.body.cover)
 
   try {
     const newBlog = await blog.save()
-    res.redirect(`books/${newBlog.id}`)
+    res.redirect(`blogs/${newBlog.id}`)
   } catch {
     renderNewPage(res, blog, true)
   }
-});
+})
 
 // Show blog Route
 router.get('/:id', async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id)
+                           .populate('author')
                            .exec()
     res.render('blogs/show', { blog: blog })
   } catch {
     res.redirect('/')
   }
-});
+})
 
 // Edit blog Route
 router.get('/:id/edit', async (req, res) => {
@@ -68,7 +71,7 @@ router.get('/:id/edit', async (req, res) => {
   } catch {
     res.redirect('/')
   }
-});
+})
 
 // Update blog Route
 router.put('/:id', async (req, res) => {
@@ -76,16 +79,15 @@ router.put('/:id', async (req, res) => {
 
   try {
     blog = await Blog.findById(req.params.id)
-    blog.title = req.body.title;
-   // blog.author = req.body.author;
-    blog.publishDate = new Date().toLocaleDateString();
-    blog.subTitle = req.body.subTitle;
-    blog.blogText = req.body.blogText;
+    blog.blogTitle = req.body.blogTitle
+    blog.author = req.body.author
+    blog.subTitle = req.body.subTitle
+    blog.blogText = req.body.blogText
     if (req.body.cover != null && req.body.cover !== '') {
       saveCover(blog, req.body.cover)
     }
     await blog.save()
-    res.redirect(`/books/${blog.id}`)
+    res.redirect(`/blogs/${blog.id}`)
   } catch {
     if (blog != null) {
       renderEditPage(res, blog, true)
@@ -93,7 +95,7 @@ router.put('/:id', async (req, res) => {
       redirect('/')
     }
   }
-});
+})
 
 // Delete blog Page
 router.delete('/:id', async (req, res) => {
@@ -112,7 +114,7 @@ router.delete('/:id', async (req, res) => {
       res.redirect('/')
     }
   }
-});
+})
 
 async function renderNewPage(res, blog, hasError = false) {
   renderFormPage(res, blog, 'new', hasError)
@@ -124,7 +126,9 @@ async function renderEditPage(res, blog, hasError = false) {
 
 async function renderFormPage(res, blog, form, hasError = false) {
   try {
+    const authors = await Author.find({})
     const params = {
+      authors: authors,
       blog: blog
     }
     if (hasError) {
@@ -141,8 +145,8 @@ async function renderFormPage(res, blog, form, hasError = false) {
 }
 
 function saveCover(blog, coverEncoded) {
-  if (coverEncoded == null){ return }
-  const cover = JSON.parse(coverEncoded);
+  if (coverEncoded == null) return
+  const cover = JSON.parse(coverEncoded)
   if (cover != null && imageMimeTypes.includes(cover.type)) {
     blog.coverImage = new Buffer.from(cover.data, 'base64')
     blog.coverImageType = cover.type
