@@ -6,7 +6,7 @@ const Blog = require('../models/blog');
 router.get('/', async (req, res) => {
   let blogs
   try {
-    blogs = await Blog.find().sort({ createdAt: 'desc' }).limit(10).exec()
+    blogs = await Blog.find().sort({ createdAt: 'desc' }).limit(2).exec()
   } catch {
     blogs = []
   }

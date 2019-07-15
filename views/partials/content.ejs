@@ -1,0 +1,26 @@
+ <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-preview">
+          <% blogs.forEach(blog => { %> 
+            <div class="post-preview">
+              <a href="/blogs/<%= blog.id %>">
+                      <h2 class="post-title">
+                        <%= blog.blogTitle %>
+                      </h2>
+                      <h3 class="post-subtitle">
+                        <%= blog.subTitle %>
+                      </h3>
+              </a>
+                      <p class="post-meta lim">on <%= blog.createdAt %></p>              
+            </div>
+             <hr>
+            <% }) %>
+      </div>
+    </div>
+  </div>
+
+
+
+
