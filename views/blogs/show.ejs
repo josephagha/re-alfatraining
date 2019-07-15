@@ -1,19 +1,35 @@
-<h2 class="page-header"><%= blog.blogTitle %></h2>
-<div class="book-details">
-  <div>
-    <img class="book-cover" src="<%= blog.coverImagePath %>">
-    <div class="book-details-btn-grid">
-      <a class="btn btn-primary" href="/blogs/<%= blog.id %>/edit">Edit</a>
-      <%- include('../partials/deleteForm', { url: `/blogs/${blog.id}` }) %>
-      <a class="btn btn-primary book-details-author-button" href="/authors/<%= blog.author.id %>">View Author</a>
+<!-- Page Header -->
+  <header class="masthead" style="background-image: url('<%= blog.coverImagePath %>')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-11 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1><%= blog.blogTitle %></h1>
+            <h2 class="subheading"><%= blog.subTitle %></h2>
+            <span class="meta">Posted by
+              <a href="#">Start Bootstrap</a>
+              on August 24, 2019</span>
+           <div class="margin-top-45">
+            <a class="btn btn-info btn-sm" href="/blogs/<%= blog.id %>/edit">Edit</a>
+            <a class="btn btn-info btn-sm" href="/authors/<%= blog.author.id %>">View Author</a>
+          </div>
+           <%- include('../partials/deleteForm', { url: `/blogs/${blog.id}` }) %>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="book-details-grid">
-    <div class="book-details-label">Author:</div>
-    <div><%= blog.author.name %></div>
-    <div class="book-details-label">sub title:</div>
-    <div><%= blog.subTitle %></div>
-    <div class="book-details-label">blog text:</div>
-    <div><%= blog.blogText %></div>
-  </div>
-</div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <%= blog.blogText %>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>

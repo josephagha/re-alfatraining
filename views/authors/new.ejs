@@ -1,8 +1,17 @@
-<h2 class="page-header">New Author</h2>
+<%- include('../partials/hd') %>
+<div class="container">
+    <div class="row">
+      <div class="col-lg-5 col-md-10 mx-auto">
+
+<h2 class="page-header" style="text-align: center;">New Author</h2>
 <form action="/authors" method="POST">
   <%- include('_form_fields') %>
-  <div class="form-row form-row-end btn-row">
-    <a class="btn btn-danger" href="/authors">Cancel</a>
-    <button class="btn btn-primary" type="submit">Create</button>
+  <div class=" m-auto" style="width: 230px;">
+    <a class="btn btn-danger btn-sm" href="/authors">Cancel</a>
+    <button class="btn btn-primary btn-sm" type="submit">Create</button>
   </div>
 </form>
+
+</div>
+    </div>
+        </div>

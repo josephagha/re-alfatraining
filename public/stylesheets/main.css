@@ -1,5 +1,5 @@
 @import 'shared/variables.css';
-@import 'shared/books.css';
+@import 'shared/blogs.css';
 
 .error-message {
   color: hsl(var(--color-danger-hue), 100%, 50%);
@@ -9,4 +9,38 @@
   white-space: nowrap;
   width: 152px;
   overflow: hidden;
+}
+
+.delete-form{
+  margin-top: 5px;
+}
+
+.margin-top-45{
+  margin-top: 45px;
+}
+
+
+/* Styles for wrapping the search box */
+
+.main {
+  width: 50%;
+  margin: 50px auto;
+}
+
+/* Bootstrap 4 text input with search icon */
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
 }

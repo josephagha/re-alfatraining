@@ -1,10 +1,28 @@
-<h2 class="page-header"><%= author.name %></h2>
-<div class="btn-row">
+<%- include('../partials/hd') %>
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+<h2 class="page-header" style="text-align: center;"><%= author.name %></h2>
+<form action="/authors/<%= author.id %>?_method=PUT" method="POST">
+  <div class=" m-auto" style="width: 234px;">
+    <%- include('../partials/deleteForm',{ url: `/authors/${author.id}` }) %>
   <a class="btn btn-primary" href="/authors/<%= author.id %>/edit">Edit</a>
-  <%- include('../partials/deleteForm',
-              { url: `/authors/${author.id}` }) %>
+  </div>
+</form>
+<br>
+
 </div>
+    </div>
+        </div>
+
 <% if (blogsByAuthor.length > 0) { %>
-  <h2 class="page-header">blogs By Author</h2>
-  <%- include('../partials/blogGrid', { blogs: blogsByAuthor }) %>
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+  <h2 class="page-header"><%= author.name %> blogs :</h2>
+  </div>
+    </div>
+        </div>
+  <%- include('../partials/content.ejs', { blogs: blogsByAuthor, large: true }) %>
 <% } %>

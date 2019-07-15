@@ -1,8 +1,54 @@
-<h2 class="page-header">New blog</h2>
-<form action="/blogs" method="POST">
-  <%- include('_form_fields') %>
-  <div class="form-row form-row-end btn-row">
-    <a class="btn btn-danger" href="/blogs">Cancel</a>
-    <button class="btn btn-primary" type="submit">Create</button>
+<%- include('../partials/hd') %>
+<!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <form name="sentMessage" id="contactForm" novalidate action="/blogs" method="POST">
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Title</label>
+              <input type="text" class="form-control" placeholder="blog Title" id="blogTitle"  name="blogTitle" value="<%= blog.blogTitle %>" required data-validation-required-message="Please enter your name.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>sub Title</label>
+              <input type="email" class="form-control" placeholder="sub Title" id="subTitle" name="subTitle"  value="<%= blog.subTitle %>" required data-validation-required-message="Please enter your email address.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <br>
+          <div class="control-group form-group floating-label-form-group controls">
+            <textarea rows="5" class="form-control" placeholder="blog Text" id="blogText" name="blogText" required data-validation-required-message="Please enter a message."><%= blog.blogText %></textarea>
+          </div>
+          <br>
+          <div class="row">
+           <div class="col-lg-5 col-md-10 mx-auto">
+           <input type="file" name="cover" class="book-cover filepond">
+           </div>
+
+          <div class="col-lg-7 col-md-10 mx-auto">
+           <label for="exampleFormControlSelect1">Author</label>
+            <select class="form-control " id="exampleFormControlSelect1" name="author" >
+                 <% authors.forEach(author => { %>
+                    <% if (author.id === blog.author) { %>
+                      <option selected label="<%= author.name %>" value="<%= author.id %>" >
+                   <% } else { %>
+                     <option label="<%= author.name %>" value="<%= author.id %>" >
+                          <% } %>
+                <% }) %>
+            </select>
+
+            <div id="success "></div>
+            <div class="form-group mt-5">
+              <button type="submit" class="btn btn-primary" id="sendMessageButton">Create</button>
+            </div>
+            </div>
+           </div>
+        </form>
+      </div>
+    </div>
   </div>
-</form>
+
+  <hr>

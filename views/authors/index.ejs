@@ -1,24 +1,42 @@
-<h2 class="page-header">Search Authors</h2>
+<%- include('../partials/hd') %>
+
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
 <form action="/authors" method="GET">
-  <div class="form-row">
-    <div class="form-item">
-      <label>Name</label>
-      <input type="text" name="name" value="<%= searchOptions.name %>">
+  <div class="input-group">
+    <input type="text" class="form-control" name="name" value="<%= searchOptions.name %>" placeholder="Search in authors">
+    <div class="input-group-append" style="height: 38px;">
+      <button class="btn btn-secondary" type="submit">
+        <i class="fa fa-search" style="margin-top: -3px;"></i>
+      </button>
     </div>
-  </div>
-  <div class="form-row form-row-end">
-    <button class="btn btn-primary" type="submit">Search</button>
   </div>
 </form>
 <br>
-<% authors.forEach(author => { %>
-  <div class="author-row">
-    <div class="author-name"><%= author.name %></div>
-    <div class="btn-row">
-      <a class="btn btn-primary" href="/authors/<%= author.id %>">View</a>
-      <a class="btn btn-primary" href="/authors/<%= author.id %>/edit">Edit</a>
-      <%- include('../partials/deleteForm',
-                  { url: `/authors/${author.id}` }) %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Author</th>
+      <th scope="col">Preview</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+  <% authors.forEach(author => { %>
+  <tr>
+    <td><%= author.name %></td>
+    <td><a class="btn btn-primary btn-sm" href="/authors/<%= author.id %>">View</a></td>
+    <td><a class="btn btn-primary btn-sm" href="/authors/<%= author.id %>/edit">Edit</a></td>
+    <td><%- include('../partials/deleteForm',{ url: `/authors/${author.id}` }) %></td>            
+  </tr>
+  <% }) %>
+  </tbody>
+</table>
+
+</div>
     </div>
-  </div>
-<% }) %>
+      </div>
