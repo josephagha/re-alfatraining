@@ -7,18 +7,23 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 
 // All Blogs Route الراوتر العام للبلوك
 router.get('/', async (req, res) => {
-  let query = Blog.find()
-  if (req.query.title != null && req.query.title != '') {
-    query = query.regex('title', new RegExp(req.query.title, 'i'))
-  }
-  if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
-    query = query.lte('publishDate', req.query.publishedBefore)
-  }
-  if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
-    query = query.gte('publishDate', req.query.publishedAfter)
+  /*let query = Blog.find()
+    if (req.query.title != null && req.query.title != '') {
+      query = query.regex('title', new RegExp(req.query.title, 'i'))
+    }
+     if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
+      query = query.lte('publishDate', req.query.publishedBefore)
+    }
+    if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
+      query = query.gte('publishDate', req.query.publishedAfter)
+    } */
+  let searchOptions = {}
+  if (req.query.blogTitle != null && req.query.blogTitle !== '') {
+    searchOptions.blogTitle = new RegExp(req.query.blogTitle, 'i')
   }
   try {
-    const blogs = await query.exec()
+   // const blogs = await query.exec()
+   const blogs = await Blog.find(searchOptions)
     res.render('blogs/index', {
       blogs: blogs,
       searchOptions: req.query
@@ -55,8 +60,8 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id)
-                           .populate('author')
-                           .exec()
+      .populate('author')
+      .exec()
     res.render('blogs/show', { blog: blog })
   } catch {
     res.redirect('/')
@@ -116,7 +121,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
- //FUNCTION 
+//FUNCTION 
 async function renderNewPage(res, blog, hasError = false) {
   renderFormPage(res, blog, 'new', hasError)
 }
