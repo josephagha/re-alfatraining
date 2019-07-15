@@ -8,7 +8,7 @@
             <h1><%= blog.blogTitle %></h1>
             <h2 class="subheading"><%= blog.subTitle %></h2>
             <span class="meta">Posted by
-              <a href="#">Start Bootstrap</a>
+              <a href="/authors/<%= blog.author.id %>"><%= blog.author.name %></a>
               on August 24, 2019</span>
            <div class="margin-top-45">
             <a class="btn btn-info btn-sm" href="/blogs/<%= blog.id %>/edit">Edit</a>
