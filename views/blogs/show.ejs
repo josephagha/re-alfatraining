@@ -3,8 +3,8 @@
   <div>
     <img class="book-cover" src="<%= blog.coverImagePath %>">
     <div class="book-details-btn-grid">
-      <a class="btn btn-primary" href="/books/<%= blog.id %>/edit">Edit</a>
-      <%- include('../partials/deleteForm', { url: `/books/${blog.id}` }) %>
+      <a class="btn btn-primary" href="/blogs/<%= blog.id %>/edit">Edit</a>
+      <%- include('../partials/deleteForm', { url: `/blogs/${blog.id}` }) %>
       <a class="btn btn-primary book-details-author-button" href="/authors/<%= blog.author.id %>">View Author</a>
     </div>
   </div>

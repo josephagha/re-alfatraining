@@ -1,9 +1,10 @@
-const express = require('express')
-const router = express.Router()
-const Author = require('../models/author')
-const Book = require('../models/book')
+'use strict';
+const express = require('express');
+const router = express.Router();
+const Author = require('../models/author');
+const Blog = require('../models/blog');
 
-// All Authors Route
+// All Authors Route  الراوتر العام لصفحة الكتاب
 router.get('/', async (req, res) => {
   let searchOptions = {}
   if (req.query.name != null && req.query.name !== '') {
@@ -18,18 +19,18 @@ router.get('/', async (req, res) => {
   } catch {
     res.redirect('/')
   }
-})
+});
 
-// New Author Route
+// New Author Route راوتر صفحة اضافة كاتب جديد
 router.get('/new', (req, res) => {
   res.render('authors/new', { author: new Author() })
-})
+});
 
-// Create Author Route
+// Create Author Route راوتر اضافة كاتب جديد
 router.post('/', async (req, res) => {
   const author = new Author({
     name: req.body.name
-  })
+  });
   try {
     const newAuthor = await author.save()
     res.redirect(`authors/${newAuthor.id}`)
@@ -39,21 +40,23 @@ router.post('/', async (req, res) => {
       errorMessage: 'Error creating Author'
     })
   }
-})
+});
 
+// البحث عن كاتب بحسب الايدي  Author by ID
 router.get('/:id', async (req, res) => {
   try {
     const author = await Author.findById(req.params.id)
-    const books = await Book.find({ author: author.id }).limit(6).exec()
+    const blogs = await Blog.find({ author: author.id }).limit(6).exec()
     res.render('authors/show', {
       author: author,
-      booksByAuthor: books
+      blogsByAuthor: blogs
     })
   } catch {
     res.redirect('/')
   }
-})
+});
 
+// Edit Author تعديل الكاتب 
 router.get('/:id/edit', async (req, res) => {
   try {
     const author = await Author.findById(req.params.id)
@@ -61,8 +64,9 @@ router.get('/:id/edit', async (req, res) => {
   } catch {
     res.redirect('/authors')
   }
-})
+});
 
+// تعديل على الكاتب 
 router.put('/:id', async (req, res) => {
   let author
   try {
@@ -80,8 +84,9 @@ router.put('/:id', async (req, res) => {
       })
     }
   }
-})
+});
 
+// حذف الكاتب 
 router.delete('/:id', async (req, res) => {
   let author
   try {
@@ -95,6 +100,7 @@ router.delete('/:id', async (req, res) => {
       res.redirect(`/authors/${author.id}`)
     }
   }
-})
+});
 
 module.exports = router
+

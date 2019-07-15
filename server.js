@@ -1,35 +1,49 @@
+'use strict';
+//للتحقق بحال كنا في مرحلة البرمجة
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
-}
+};
 
-const express = require('express')
-const app = express()
-const expressLayouts = require('express-ejs-layouts')
-const bodyParser = require('body-parser')
-const methodOverride = require('method-override')
+const express = require('express');
+const app = express();
+const expressLayouts = require('express-ejs-layouts');
 
-const indexRouter = require('./routes/index')
-const authorRouter = require('./routes/authors')
-const bookRouter = require('./routes/books')
-const blogRouter = require('./routes/blogs')
+//اضافة البدي بارثر التي تساعد بالعمل على البوست القادم من الكلينت
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
-app.set('view engine', 'ejs')
-app.set('views', __dirname + '/views')
+//استيراد ملغ الراوتر
+const indexRouter = require('./routes/index');
+const authorRouter = require('./routes/authors');
+const blogRouter = require('./routes/blogs');
+
+//تحديد التيملت انجن
+app.set('view engine', 'ejs');
+// تحديد ملف الفيو
+app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout')
-app.use(expressLayouts)
-app.use(methodOverride('_method'))
-app.use(express.static('public'))
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
+app.use(expressLayouts);
+app.use(methodOverride('_method'));
+//اين يكون الببلك فايل
+app.use(express.static('public'));
+//اخبار السيرفر كيف يستخدم البديبارثر - ليمت الرفع 10 ميكا 
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 
-const mongoose = require('mongoose')
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
-const db = mongoose.connection
-db.on('error', error => console.error(error))
-db.once('open', () => console.log('Connected to Mongoose'))
+//اضافة المنكوديبي
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+const db = mongoose.connection;
+db.on('error', error => console.error(error));
+db.once('open', () => console.log('Connected to Mongoose'));
 
-app.use('/', indexRouter)
-app.use('/authors', authorRouter)
-app.use('/books', bookRouter)
-app.use('/blogs', blogRouter)
+//استخدام ملف الراوتر
+app.use('/', indexRouter);
+app.use('/authors', authorRouter);
+app.use('/blogs', blogRouter);
 
-app.listen(process.env.PORT || 3000)
+//لتحديد حسب ما يختار السرفير لكن الـ 3000 لمرحلة البرمجة
+app.listen(process.env.PORT || 3000);
+
+
+//sudo service mongodb start
+//mongo

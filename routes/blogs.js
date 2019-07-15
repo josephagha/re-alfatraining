@@ -1,11 +1,11 @@
-const express = require('express')
-const router = express.Router()
-const Book = require('../models/book')
-const Author = require('../models/author')
-const Blog = require('../models/blog')
+'use strict';
+const express = require('express');
+const router = express.Router();
+const Author = require('../models/author');
+const Blog = require('../models/blog');
 const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 
-// All Blogs Route
+// All Blogs Route الراوتر العام للبلوك
 router.get('/', async (req, res) => {
   let query = Blog.find()
   if (req.query.title != null && req.query.title != '') {
@@ -26,14 +26,14 @@ router.get('/', async (req, res) => {
   } catch {
     res.redirect('/')
   }
-})
+});
 
-// New blog Route
+// New blog Route راوتر البلوك الجديد
 router.get('/new', async (req, res) => {
   renderNewPage(res, new Blog())
-})
+});
 
-// Create blog Route
+// Create blog Route راوتر انشاء مدونة جديدة
 router.post('/', async (req, res) => {
   const blog = new Blog({
     blogTitle: req.body.blogTitle,
@@ -49,9 +49,9 @@ router.post('/', async (req, res) => {
   } catch {
     renderNewPage(res, blog, true)
   }
-})
+});
 
-// Show blog Route
+// Show blog Route راوتر اظهار البلوك بالايدي
 router.get('/:id', async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id)
@@ -61,9 +61,9 @@ router.get('/:id', async (req, res) => {
   } catch {
     res.redirect('/')
   }
-})
+});
 
-// Edit blog Route
+// Edit blog Route تعديل البلوك
 router.get('/:id/edit', async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id)
@@ -71,9 +71,9 @@ router.get('/:id/edit', async (req, res) => {
   } catch {
     res.redirect('/')
   }
-})
+});
 
-// Update blog Route
+// Update تعديل البلوك
 router.put('/:id', async (req, res) => {
   let blog
 
@@ -95,9 +95,9 @@ router.put('/:id', async (req, res) => {
       redirect('/')
     }
   }
-})
+});
 
-// Delete blog Page
+// Delete  حذف البلوك
 router.delete('/:id', async (req, res) => {
   let blog
   try {
@@ -114,8 +114,9 @@ router.delete('/:id', async (req, res) => {
       res.redirect('/')
     }
   }
-})
+});
 
+ //FUNCTION 
 async function renderNewPage(res, blog, hasError = false) {
   renderFormPage(res, blog, 'new', hasError)
 }
@@ -142,7 +143,7 @@ async function renderFormPage(res, blog, form, hasError = false) {
   } catch {
     res.redirect('/blogs')
   }
-}
+};
 
 function saveCover(blog, coverEncoded) {
   if (coverEncoded == null) return
@@ -151,6 +152,6 @@ function saveCover(blog, coverEncoded) {
     blog.coverImage = new Buffer.from(cover.data, 'base64')
     blog.coverImageType = cover.type
   }
-}
+};
 
 module.exports = router
