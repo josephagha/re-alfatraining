@@ -31,7 +31,8 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 
 //اضافة المنكوديبي
 const mongoose = require('mongoose');
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASE_URL || "mongodb+srv://user:ECXs7ml6Yvc6PKdZ@cluster0-idk3j.mongodb.net/test?retryWrites=true&w=majority",
+{ useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', error => console.error(error));
 db.once('open', () => console.log('Connected to Mongoose'));
@@ -46,4 +47,5 @@ app.listen(process.env.PORT || 3000);
 
 
 //sudo service mongodb start
-//mongo
+//mongo 
+//ECXs7ml6Yvc6PKdZ
