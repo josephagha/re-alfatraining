@@ -7,16 +7,7 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 
 // All Blogs Route الراوتر العام للبلوك
 router.get('/', async (req, res) => {
-  /*let query = Blog.find()
-    if (req.query.title != null && req.query.title != '') {
-      query = query.regex('title', new RegExp(req.query.title, 'i'))
-    }
-     if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
-      query = query.lte('publishDate', req.query.publishedBefore)
-    }
-    if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
-      query = query.gte('publishDate', req.query.publishedAfter)
-    } */
+
   let searchOptions = {}
   if (req.query.blogTitle != null && req.query.blogTitle !== '') {
     searchOptions.blogTitle = new RegExp(req.query.blogTitle, 'i')
